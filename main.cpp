@@ -58,11 +58,39 @@ int main(int argc, char* argv[])
         }
         else if (input == "3")
         {
+            string inventoryName;
+            string itemName;
+            string quantity;
 
+            cin.ignore();
+            cout << "Enter inventory name:" << endl;
+            getline(cin, inventoryName);
+            cout << "Enter item name:" << endl;
+            getline(cin, itemName);
+            cout << "Enter item quantity:" << endl;
+            getline(cin, quantity);
+
+            int quantityInt = atoi(quantity.c_str());
+
+            data.insertInventoryFront(inventoryName, itemName, quantityInt);
         }
         else if (input == "4")
         {
+            string inventoryName;
+            string itemName;
+            string quantity;
 
+            cin.ignore();
+            cout << "Enter inventory name:" << endl;
+            getline(cin, inventoryName);
+            cout << "Enter item name:" << endl;
+            getline(cin, itemName);
+            cout << "Enter item quantity:" << endl;
+            getline(cin, quantity);
+
+            int quantityInt = atoi(quantity.c_str());
+
+            data.insertInventoryBack(inventoryName, itemName, quantityInt);
         }
         else if (input == "5")
         {
@@ -99,7 +127,13 @@ int main(int argc, char* argv[])
         }
         else if (input == "9")
         {
+            string name;
 
+            cin.ignore();
+            cout << "Enter inventory name:" << endl;
+            getline(cin, name);
+
+            data.printInventoryItems(name);
         }
         else if (input == "10")
         {

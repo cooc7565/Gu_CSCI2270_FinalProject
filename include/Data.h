@@ -45,8 +45,8 @@ class Data
         ~Data();
         void insertItemFront(std::string name, int quantity);
         void insertItemBack(std::string name, int quantity);
-        void insertInventoryFront(std::string inventoryName, std::string itemName);
-        void insertInventoryBack(std::string inventoryName, std::string itemName);
+        void insertInventoryFront(std::string inventoryName, std::string itemName, int quantity);
+        void insertInventoryBack(std::string inventoryName, std::string itemName, int quantity);
         void deleteItem(std::string name);
         void changeQuantity(std::string name, int quantity);
         void clearAll();

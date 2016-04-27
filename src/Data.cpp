@@ -44,38 +44,66 @@ void Data::insertItemBack(std::string name, int quantity)
     }
 }
 
-void Data::insertInventoryFront(std::string inventoryName, std::string itemName)
+void Data::insertInventoryFront(std::string inventoryName, std::string itemName, int quantity)
 {
-    DataElem* node = new DataElem(itemName);
+    DataElem* node = new DataElem(itemName, quantity);
 
-    if (front == NULL)
+    DataElem* temp = front;
+
+    while (temp != NULL)
     {
-        front = node;
-        back = node;
+        if (temp->name == inventoryName)
+        {
+            if (temp->front == NULL)
+            {
+                temp->front = node;
+                temp->back = node;
+            }
+            else
+            {
+                temp->front->previous = node;
+                node->next = temp->front;
+                temp->front = node;
+            }
+
+            return;
+        }
+
+        temp = temp->next;
     }
-    else
-    {
-        front->previous = node;
-        node->next = front;
-        front = node;
-    }
+
+    cout << "Inventory not found." << endl;
 }
 
-void Data::insertInventoryBack(std::string inventoryName, std::string itemName)
+void Data::insertInventoryBack(std::string inventoryName, std::string itemName, int quantity)
 {
-    DataElem *node = new DataElem(itemName);
+    DataElem* node = new DataElem(itemName, quantity);
 
-    if (back == NULL)
+    DataElem* temp = front;
+
+    while (temp != NULL)
     {
-        front = node;
-        back = node;
+        if (temp->name == inventoryName)
+        {
+            if (temp->back == NULL)
+            {
+                temp->front = node;
+                temp->back = node;
+            }
+            else
+            {
+                temp->back->next = node;
+                node->previous = temp->back;
+                temp->back = node;
+            }
+
+            return;
+        }
+
+        temp = temp->next;
     }
-    else
-    {
-        back->next = node;
-        node->previous = back;
-        back = node;
-    }
+
+    cout << "Inventory not found." << endl;
 }
 
 void Data::deleteItem(std::string name)
@@ -160,12 +188,30 @@ void Data::printAllItems()
     {
         cout << "Item: " << temp->name << " Quantity: " << temp->quantity << endl;
         temp = temp->next;
+        return;
     }
 }
 
 void Data::printInventoryItems(std::string name)
 {
+    DataElem *temp = front;
 
+    while (temp != NULL)
+    {
+        if (temp->name == name)
+        {
+            DataElem *temp2 = temp->front;
+
+            while (temp2 != NULL)
+            {
+                cout << "Item: " << temp2->name << " Quantity: " << temp2->quantity << endl;
+                temp2 = temp2->next;
+                return;
+            }
+        }
+
+        temp = temp->next;
+    }
 }
 
 void Data::findItem(std::string name)
