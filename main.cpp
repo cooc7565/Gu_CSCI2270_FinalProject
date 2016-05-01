@@ -7,15 +7,15 @@ int main(int argc, char* argv[])
     bool quit = false;
 
     cout << "======Main Menu======" << endl;
-    cout << "1. Insert item in front" << endl;
-    cout << "2. Insert item in back" << endl;
-    cout << "3. Insert inventory in front" << endl;
-    cout << "4. Insert inventory in back" << endl;
+    cout << "1. Insert first item" << endl;
+    cout << "2. Insert item" << endl;
+    cout << "3. Insert first nested inventory item" << endl;
+    cout << "4. Insert nested inventory item" << endl;
     cout << "5. Delete item" << endl;
     cout << "6. Change item quantity" << endl;
     cout << "7. Clear all" << endl;
     cout << "8. Print all items" << endl;
-    cout << "9. Print all inventory items" << endl;
+    cout << "9. Print all nested inventory items" << endl;
     cout << "10. Find item" << endl;
     cout << "11. Select inventory" << endl;
     cout << "12. Quit" << endl;
@@ -39,22 +39,26 @@ int main(int argc, char* argv[])
 
             int quantityInt = atoi(quantity.c_str());
 
-            data.insertItemFront(name, quantityInt);
+            data.insertFirstItem(name, quantityInt);
         }
         else if (input == "2")
         {
             string name;
             string quantity;
+            string position;
 
             cin.ignore();
             cout << "Enter item name:" << endl;
             getline(cin, name);
             cout << "Enter item quantity:" << endl;
             getline(cin, quantity);
+            cout << "Enter item position:" << endl;
+            getline(cin, position);
 
             int quantityInt = atoi(quantity.c_str());
+            int positionInt = atoi(position.c_str());
 
-            data.insertItemBack(name, quantityInt);
+            data.insertItem(name, positionInt, quantityInt);
         }
         else if (input == "3")
         {
@@ -63,7 +67,7 @@ int main(int argc, char* argv[])
             string quantity;
 
             cin.ignore();
-            cout << "Enter inventory name:" << endl;
+            cout << "Enter name of item to convert into inventory:" << endl;
             getline(cin, inventoryName);
             cout << "Enter item name:" << endl;
             getline(cin, itemName);
@@ -72,25 +76,29 @@ int main(int argc, char* argv[])
 
             int quantityInt = atoi(quantity.c_str());
 
-            data.insertInventoryFront(inventoryName, itemName, quantityInt);
+            data.insertFirstNestedItem(inventoryName, itemName, quantityInt);
         }
         else if (input == "4")
         {
             string inventoryName;
             string itemName;
             string quantity;
+            string position;
 
             cin.ignore();
-            cout << "Enter inventory name:" << endl;
+            cout << "Enter name of inventory item:" << endl;
             getline(cin, inventoryName);
             cout << "Enter item name:" << endl;
             getline(cin, itemName);
             cout << "Enter item quantity:" << endl;
             getline(cin, quantity);
+            cout << "Enter item position:" << endl;
+            getline(cin, position);
 
             int quantityInt = atoi(quantity.c_str());
+            int positionInt = atoi(position.c_str());
 
-            data.insertInventoryBack(inventoryName, itemName, quantityInt);
+            data.insertNestedItem(inventoryName, itemName, positionInt, quantityInt);
         }
         else if (input == "5")
         {
@@ -151,21 +159,21 @@ int main(int argc, char* argv[])
         }
         else if (input == "12")
         {
-            cout << "Goodbye!" << endl;
+            cout << "Exiting program." << endl;
 
             return 0;
         }
 
         cout << "======Main Menu======" << endl;
-        cout << "1. Insert item in front" << endl;
-        cout << "2. Insert item in back" << endl;
-        cout << "3. Insert inventory in front" << endl;
-        cout << "4. Insert inventory in back" << endl;
+        cout << "1. Insert first item" << endl;
+        cout << "2. Insert item" << endl;
+        cout << "3. Insert first nested inventory item" << endl;
+        cout << "4. Insert nested inventory item" << endl;
         cout << "5. Delete item" << endl;
         cout << "6. Change item quantity" << endl;
         cout << "7. Clear all" << endl;
         cout << "8. Print all items" << endl;
-        cout << "9. Print all inventory items" << endl;
+        cout << "9. Print all nested inventory items" << endl;
         cout << "10. Find item" << endl;
         cout << "11. Select inventory" << endl;
         cout << "12. Quit" << endl;

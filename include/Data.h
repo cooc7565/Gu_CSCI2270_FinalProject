@@ -43,10 +43,11 @@ class Data
     public:
         Data();
         ~Data();
-        void insertItemFront(std::string name, int quantity);
-        void insertItemBack(std::string name, int quantity);
-        void insertInventoryFront(std::string inventoryName, std::string itemName, int quantity);
-        void insertInventoryBack(std::string inventoryName, std::string itemName, int quantity);
+        void insertFirstItem(std::string name, int quantity);
+        void insertItem(std::string name, int position, int quantity);
+        void insertFirstNestedItem(std::string nestedName, std::string name, int quantity);
+        void insertNestedItem(std::string nestedName, std::string name, int position, int quantity);
+
         void deleteItem(std::string name);
         void changeQuantity(std::string name, int quantity);
         void clearAll();

@@ -10,60 +10,83 @@ Data::~Data()
     //dtor
 }
 
-void Data::insertItemFront(std::string name, int quantity)
+void Data::insertFirstItem(std::string name, int quantity)
 {
+    // Insert first item to head of linked list
+
     DataElem* node = new DataElem(name, quantity);
 
     if (front == NULL)
     {
+        node->next = back;
+        node->previous = NULL;
         front = node;
-        back = node;
     }
     else
     {
-        front->previous = node;
-        node->next = front;
-        front = node;
+        cout << "First item already exists." << endl;
     }
 }
 
-void Data::insertItemBack(std::string name, int quantity)
+void Data::insertItem(std::string name, int position, int quantity)
 {
-    DataElem *node = new DataElem(name, quantity);
+    // Insert item to a given integer position on linked list
 
-    if (back == NULL)
+    DataElem* node = new DataElem(name, quantity);
+    DataElem* temp = front;
+
+    int i = 0;
+
+    while (temp != NULL)
     {
-        front = node;
-        back = node;
+        if (i == position)
+        {
+            if (temp->next != NULL)
+            {
+                node->next = temp->next;
+                node->previous = temp;
+                temp->next->previous = node;
+                temp->next = node;
+
+                return;
+            }
+            else if (temp->next == NULL)
+            {
+                node->previous = temp;
+                node->next = NULL;
+                temp->next = node;
+
+                return;
+            }
+        }
+
+        temp = temp->next;
+        i++;
     }
-    else
-    {
-        back->next = node;
-        node->previous = back;
-        back = node;
-    }
+
+    cout << "Position out of bounds." << endl;
 }
 
-void Data::insertInventoryFront(std::string inventoryName, std::string itemName, int quantity)
+void Data::insertFirstNestedItem(std::string nestedName, std::string name, int quantity)
 {
-    DataElem* node = new DataElem(itemName, quantity);
+    // Convert item into inventory and add first item to head of item linked list
 
+    DataElem* node = new DataElem(name, quantity);
     DataElem* temp = front;
 
     while (temp != NULL)
     {
-        if (temp->name == inventoryName)
+        if (temp->name == nestedName)
         {
             if (temp->front == NULL)
             {
+                node->next = temp->back;
+                node->previous = NULL;
                 temp->front = node;
-                temp->back = node;
             }
             else
             {
-                temp->front->previous = node;
-                node->next = temp->front;
-                temp->front = node;
+                cout << "First item already exists." << endl;
             }
 
             return;
@@ -75,27 +98,48 @@ void Data::insertInventoryFront(std::string inventoryName, std::string itemName,
     cout << "Inventory not found." << endl;
 }
 
-void Data::insertInventoryBack(std::string inventoryName, std::string itemName, int quantity)
+void Data::insertNestedItem(std::string nestedName, std::string name, int position, int quantity)
 {
-    DataElem* node = new DataElem(itemName, quantity);
+    // Insert item into nested inventory at a given position on item linked list
 
+    DataElem* node = new DataElem(name, quantity);
     DataElem* temp = front;
 
     while (temp != NULL)
     {
-        if (temp->name == inventoryName)
+        if (temp->name == nestedName)
         {
-            if (temp->back == NULL)
+            DataElem *temp2 = temp->front;
+            int i = 0;
+
+            while (temp2 != NULL)
             {
-                temp->front = node;
-                temp->back = node;
+                if (i == position)
+                {
+                    if (temp2->next != NULL)
+                    {
+                        node->next = temp2->next;
+                        node->previous = temp2;
+                        temp2->next->previous = node;
+                        temp2->next = node;
+
+                        return;
+                    }
+                    else if (temp2->next == NULL)
+                    {
+                        node->previous = temp2;
+                        node->next = NULL;
+                        temp2->next = node;
+
+                        return;
+                    }
+                }
+
+                temp2 = temp2->next;
+                i++;
             }
-            else
-            {
-                temp->back->next = node;
-                node->previous = temp->back;
-                temp->back = node;
-            }
+
+            cout << "Position out of bounds." << endl;
 
             return;
         }
@@ -108,6 +152,8 @@ void Data::insertInventoryBack(std::string inventoryName, std::string itemName, 
 
 void Data::deleteItem(std::string name)
 {
+    // Delete a given item or nested inventory
+
     DataElem* temp = front;
     bool itemFound = false;
 
@@ -148,6 +194,8 @@ void Data::deleteItem(std::string name)
 
 void Data::changeQuantity(std::string name, int quantity)
 {
+    // Change quantity data of a given item
+
     DataElem* temp = front;
 
     while (temp != NULL)
@@ -167,6 +215,8 @@ void Data::changeQuantity(std::string name, int quantity)
 
 void Data::clearAll()
 {
+    // Delete all items and nested inventories
+
     DataElem *node = back;
 
     while (node != NULL)
@@ -182,18 +232,21 @@ void Data::clearAll()
 
 void Data::printAllItems()
 {
-    DataElem *temp = front;
+    // Print all items and nested inventories
+
+    DataElem* temp = front;
 
     while (temp != NULL)
     {
         cout << "Item: " << temp->name << " Quantity: " << temp->quantity << endl;
         temp = temp->next;
-        return;
     }
 }
 
 void Data::printInventoryItems(std::string name)
 {
+    // Print all items within a nested inventory
+
     DataElem *temp = front;
 
     while (temp != NULL)
@@ -206,7 +259,6 @@ void Data::printInventoryItems(std::string name)
             {
                 cout << "Item: " << temp2->name << " Quantity: " << temp2->quantity << endl;
                 temp2 = temp2->next;
-                return;
             }
         }
 
@@ -216,6 +268,8 @@ void Data::printInventoryItems(std::string name)
 
 void Data::findItem(std::string name)
 {
+    // Find a given item and display its name and quantity
+
     DataElem* temp = front;
 
     while (temp != NULL)
